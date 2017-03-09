@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ula.filmstar.dto.FilmDTO;
 import com.ula.filmstar.mapper.FilmMapper;
 import com.ula.filmstar.model.Film;
+import com.ula.filmstar.repository.FilmDTORepository;
 import com.ula.filmstar.repository.FilmRepository;
 import com.ula.filmstar.request.FilmRequest;
 
@@ -16,7 +18,13 @@ public class FilmService {
 	@Autowired
 	private FilmRepository filmRepository;
 	@Autowired
+	private FilmDTORepository filmDTORepository;
+	@Autowired
 	private FilmMapper filmMapper;
+
+	public List<FilmDTO> listIdAndTitle() {
+		return filmDTORepository.findIdAndTitle();
+	}
 
 	public List<Film> list() {
 		List<Film> listOfFilms = filmRepository.findAll();
