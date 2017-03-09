@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ula.filmstar.model.Film;
-import com.ula.filmstar.repository.FilmRepository;
+import com.ula.filmstar.repository.FilmJPARepository;
 import com.ula.filmstar.service.FilmService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 public class HelloController {
 
 	@Autowired
-	private FilmRepository filmRepository;
+	private FilmJPARepository filmJPARepository;
 	@Autowired
 	private FilmService filmService;
 
@@ -25,7 +25,7 @@ public class HelloController {
 	public String printHello(ModelMap model) {
 		log.info("Logi dzialaja");
 		Film film = new Film("tytul", "opis");
-		filmRepository.save(film);
+		filmJPARepository.save(film);
 		model.addAttribute("message", filmService.listIdAndTitle().get(0).getTitle());
 
 		return "index";

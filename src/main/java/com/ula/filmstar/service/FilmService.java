@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ula.filmstar.dto.FilmDTO;
 import com.ula.filmstar.mapper.FilmMapper;
 import com.ula.filmstar.model.Film;
-import com.ula.filmstar.repository.FilmDTORepository;
+import com.ula.filmstar.repository.FilmJPARepository;
 import com.ula.filmstar.repository.FilmRepository;
 import com.ula.filmstar.request.FilmRequest;
 
@@ -16,41 +16,36 @@ import com.ula.filmstar.request.FilmRequest;
 public class FilmService {
 
 	@Autowired
-	private FilmRepository filmRepository;
+	private FilmJPARepository filmJPARepository;
 	@Autowired
-	private FilmDTORepository filmDTORepository;
+	private FilmRepository filmRepository;
 	@Autowired
 	private FilmMapper filmMapper;
 
 	public List<FilmDTO> listIdAndTitle() {
-		return filmDTORepository.findIdAndTitle();
-	}
-
-	public List<Film> list() {
-		List<Film> listOfFilms = filmRepository.findAll();
-		return listOfFilms;
+		return filmRepository.findIdAndTitle();
 	}
 
 	public Film read(Long id) {
-		Film film = filmRepository.findById(id);
+		Film film = filmJPARepository.findById(id);
 		return film;
 	}
 
 	public void create(String title, String description) {
 		FilmRequest filmRequest = new FilmRequest(title, description);
 		Film film = filmMapper.map(filmRequest);
-		filmRepository.save(film);
+		filmJPARepository.save(film);
 	}
 
 	public void delete(Long id) {
-		filmRepository.delete(id);
+		filmJPARepository.delete(id);
 	}
 
 	public void update(Long id, String title, String description) {
-		Film film = filmRepository.findById(id);
+		Film film = filmJPARepository.findById(id);
 		film.setTitle(title);
 		film.setDescription(description);
-		filmRepository.save(film);
+		filmJPARepository.save(film);
 	}
 
 }
